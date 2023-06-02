@@ -36,7 +36,7 @@ class TodoController extends Controller
             'name' => 'required|string|max:255'
         ]);
 
-        Todo::create($validated);
+        $request->user()->todos()->create($validated);
 
         return redirect()->route('todos.index');
     }
