@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodoController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,14 @@ use App\Http\Controllers\TodoController;
 |
 */
 
-Route::resource('/todos', TodoController::class)->only([
-    'index', 'store'
-]);
+
+Route::get('/login', [LoginController::class, 'index'])->name('auth.login');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('auth.authenticate');
+Route::get('/logout', [LoginController::class, 'logout'])->name('auth.logout');
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('/todos', TodoController::class)->only([
+        'index', 'store'
+    ]);
+
+});
