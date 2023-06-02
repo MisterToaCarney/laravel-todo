@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+
+use Illuminate\Http\RedirectResponse;
 
 class TodoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
-        //
+        $todos = Todo::all();
+        return view('todos.index', ["todos" => $todos]);
     }
 
     /**
@@ -26,9 +30,15 @@ class TodoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255'
+        ]);
+
+        Todo::create($validated);
+
+        return redirect()->route('todos.index');
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TodoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('todos.index', [
-        "todos" => ["Test", "these", "are", "array", "items"]
-    ]);
-});
+Route::resource('/todos', TodoController::class)->only([
+    'index', 'store'
+]);
