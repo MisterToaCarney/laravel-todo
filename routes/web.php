@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('test');
+    return view('todos.index', [
+        "todos" => ["Test", "these", "are", "array", "items"]
+    ]);
 });
