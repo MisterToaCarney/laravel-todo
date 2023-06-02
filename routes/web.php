@@ -22,7 +22,7 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('auth.logout');
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('/todos', TodoController::class)->only([
-        'index', 'store'
+        'index', 'store', 'destroy'
     ]);
 
 });

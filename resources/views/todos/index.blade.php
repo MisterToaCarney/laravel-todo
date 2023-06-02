@@ -29,13 +29,14 @@
 
     <div class="grid grid-cols-1 gap-2 p-2">
         <x-card>
-            <table class="table-auto w-full">
+            <table class="w-full table-auto">
                 <thead>
                     <tr class="">
                         <th class="border-b p-1 text-left">#</th>
                         <th class="border-b p-1 text-left">ID</th>
                         <th class="border-b p-1 text-left">Message</th>
                         <th class="border-b p-1 text-left">Creator</th>
+                        <th class="border-b p-1 text-left w-min">ok</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,15 @@
                         <td class="border-b p-1 text-gray-700">{{ $todo['id'] }}</td>
                         <td class="border-b p-1 text-gray-700">{{ $todo['name'] }}</td>
                         <td class="border-b p-1 text-gray-700">{{ $todo->user->name }}</td>
+                        <td class="border-b p-1 text-gray-700 w-min">
+                            @can('delete', $todo)
+                            <form method="POST" action="{{route('todos.destroy', $todo->id)}}">
+                                @csrf
+                                @method('DELETE')
+                                <input class="underline" type="submit" value="DELETE">
+                            </form>
+                            @endcan
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

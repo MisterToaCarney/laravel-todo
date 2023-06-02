@@ -68,8 +68,10 @@ class TodoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Todo $todo)
+    public function destroy(Todo $todo): RedirectResponse
     {
-        //
+        $this->authorize('delete', $todo);
+        $todo->delete();
+        return redirect()->route('todos.index');
     }
 }
