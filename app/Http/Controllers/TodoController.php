@@ -54,7 +54,9 @@ class TodoController extends Controller
      */
     public function edit(Todo $todo)
     {
-        //
+        $this->authorize('update', $todo);
+
+        return view('todos.edit', ["todo" => $todo]);
     }
 
     /**
@@ -62,7 +64,13 @@ class TodoController extends Controller
      */
     public function update(Request $request, Todo $todo)
     {
-        //
+        $this->authorize('update', $todo);
+        $validated = $request->validate([
+            'name' => 'required|string|max:255'
+        ]);
+        $todo->fill($request->all());
+        $todo->update();
+        return redirect()->route('todos.index');
     }
 
     /**
